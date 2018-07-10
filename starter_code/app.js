@@ -8,15 +8,14 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
-const session      = require('express-session');
-const MongoStore   = require('connect-mongo')(session);
-const authRoutes = require('./routes/auth-routes');
-const siteRoutes = require('./routes/site-routes');
+
+const session       = require("express-session");
+const MongoStore    = require("connect-mongo")(session);
 
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/starter-code', {useMongoClient: true})
+  .connect('mongodb://localhost/lab-express-basic-auth', {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {
@@ -33,6 +32,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: "basic-auth-secret",
+  cookie: { maxAge: 600000 },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60 // 1 day
+  })
+}));
 
 // Express View engine setup
 
@@ -41,32 +48,20 @@ app.use(require('node-sass-middleware')({
   dest: path.join(__dirname, 'public'),
   sourceMap: true
 }));
-app.use(session({
-  secret: "basic-auth-secret",
-  cookie: { maxAge: 60000 },
-  store: new MongoStore({
-    mongooseConnection: mongoose.connection,
-    ttl: 24 * 60 * 60 // 1 day
-  })
-}));
-app.use('/', authRoutes);
-app.use('/', siteRoutes);
       
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
-
 // default value for title local
-app.locals.title = 'Express - Lab basic auth';
+app.locals.title = 'Express - Lab basic Auth!!!';
 
 
-
-const index = require('./routes/index');
-app.use('/', index);
-
+const authRoutes = require('./routes/auth-routes');
+const siteRoutes = require('./routes/site-routes');
+app.use('/', authRoutes);
+app.use('/', siteRoutes);
 
 module.exports = app;

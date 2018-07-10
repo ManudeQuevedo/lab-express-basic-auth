@@ -1,33 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="stylesheets/style.css">
-  <title>Login</title>
-</head>
-<body>
-  <form action="/login" method="POST" id="form">
-    <h2>Login</h2>
-
+<form action="/login" method="POST" id="form">
+    <h2>Inicia sesión</h2>
     <label for="username">Username</label>
-    <input type="text" name="username" placeholder="Username">
-
+    <input type="text" name="username" placeholder="Nombre de usuario">
+    <br><br>
     <label for="password">Password</label>
     <input type="password" name="password" placeholder="Password">
-
-    {{#if errorMessage }}
-      <div class="error-message">{{ errorMessage }}</div>
-    {{/if}}
-
+    <br><br>
     <button>Sign in</button>
-
     <p class="account-message">
-      Don't have an account? <a href="/signup">Sign up</a>
+        Aún no tienes cuenta? <a href="/signup">Crea una cuenta</a>
     </p>
-    <br>
-
-    <a href="/">Go back to Home</a>
-  </form>
-</body>
+    <br><br>
+    <a href="/">Página de inicio</a>
+</form>
+{{#if errorMessage }}
+    <div class="error-message">{{ errorMessage }}</div>
+{{/if}}

@@ -1,32 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="stylesheets/style.css">
-</head>
-
-<body>
-  <form id="form" action="/signup" method="POST">
-    <h2>Signup</h2>
+<form id="form" action="/signup" method="POST">
+    <h2>Crea una cuenta</h2>
     <label for="username">Username</label><br>
     <input type="text" name="username"
-      placeholder="Choose a username">
-
+    placeholder="Ingresa tu nombre de usuario">
     <br><br>
     <label for="password">Password</label><br>
-    <input type="password" name="password"
-      placeholder="Create a password">
+    <input id="password" type="password" name="password"
+    placeholder="Ingresa tu password">
     <br><br>
-
     <button>Create account</button>
-
     <p class="account-message">
-      Already registered? <a href="/login">Log In</a>
+        Ya tienes cuenta? <a href="/login">Ingresa a tu cuenta</a>
     </p>
-    <br>
-    <a href="/">Go back to Home</a>
-  </form>
-</body>
-</html>
+    <br><br>
+    <a href="/">Página de inicio</a>
+</form>
+{{#if errorMessage}}
+    <div class="error-message">{{ errorMessage }}</div>
+{{/if}}
